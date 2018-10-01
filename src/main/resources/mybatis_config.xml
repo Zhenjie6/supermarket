@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+<properties resource="db.properties"/>
+<settings>
+    <!-- 设置延迟加载，默认为true -->
+    <setting name="lazyLoadingEnabled" value="true"/>
+    <!-- 设置积极的延迟加载，默认为true -->
+    <setting name="aggressiveLazyLoading" value="false"/>
+    <!-- 二级缓存的总开关 -->
+    <setting name="cacheEnabled" value="true"/>
+</settings>
+<!-- 自定义别名 -->
+<typeAliases>
+    <!-- 给单个类定义别名 -->
+    <!-- 	<typeAlias type="com.zhb.mybatis.beans.User" alias="user"/> -->
+    <!-- 批量定义别名,默认为类名（首字母大小写皆可） -->
+    <package name="com.hngd.data.bean"/>
+</typeAliases>
+<environments default="development">
+    <environment id="development">
+        <transactionManager type="JDBC"/>
+        <dataSource type="POOLED">
+            <property name="driver" value="${jdbc.driver}"/>
+            <property name="url" value="${jdbc.url}"/>
+            <property name="username" value="${jdbc.username}"/>
+            <property name="password" value="${jdbc.password}"/>
+        </dataSource>
+    </environment>
+</environments>
+<!-- 加载映射文件 -->
+<mappers>
+    <mapper resource="mapper/UserMapper.xml"/>
+    <mapper resource="mapper/SupplierMapper.xml"/>
+    <mapper resource="mapper/BillMapper.xml"/>
+    <!-- 批量加载映射文件,要求mapper接口与映射文件名称要相同，且在同一个目录下 -->
+    <!-- <package name="com.zhb.mybatis.dao"/> -->
+</mappers>
+</configuration>

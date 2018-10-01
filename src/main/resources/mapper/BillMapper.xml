@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hngd.data.mapper.BillMapper">
+
+
+    <select id="findBillById" parameterType="int" resultType="bill">
+			SELECT * FROM bills WHERE serial_number = #{id}
+		</select>
+
+    <select id="findAllBill" resultType="bill">
+        select * from bills
+    </select>
+
+
+
+    <!-- 根据条件实现模糊查询 -->
+    <select id="findBillByCondition" parameterType="bill" resultType="bill">
+			SELECT * FROM bills WHERE good_name LIKE #{good_name} and supplier like #{supplier}
+			 and payment_status like #{payment_status}
+		</select>
+
+
+    <insert id="insertBill" parameterType="bill">
+        insert into bills
+        (serial_number,good_name, good_unit, good_num, supplier, bill_amount, payment_status)
+        values
+        (#{serial_number},#{good_name}, #{good_unit}, #{good_num}, #{supplier}, #{bill_amount}, #{payment_status})
+    </insert>
+
+    <!-- 修改用户信息 -->
+    <update id="updateBillById" parameterType="bill">
+			update bills set good_name=#{good_name}, good_unit=#{good_unit},
+						good_num=#{good_num}, supplier=#{supplier},
+						bill_amount=#{bill_amount}, payment_status=#{payment_status}
+			where serial_number = #{serial_number}
+		</update>
+
+    <!-- 根据id删除订单 -->
+    <delete id="delBillById" parameterType="int">
+			delete from bills where serial_number = #{id}
+		</delete>
+</mapper>
+

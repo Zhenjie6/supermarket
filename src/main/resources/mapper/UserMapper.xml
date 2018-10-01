@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hngd.data.mapper.UserMapper">
+    <!-- 根据Id查询用户信息 -->
+    <select id="findUserById" parameterType="int" resultType="user">
+			SELECT * FROM user WHERE user_id = #{id}
+		</select>
+
+    <!-- 查询所有用户信息 -->
+    <select id="findAllUsers" resultType="user">
+			select * from user
+		</select>
+
+    <!-- 根据用户名实现模糊查询 -->
+    <select id="findUserByName" parameterType="java.lang.String" resultType="user">
+			SELECT * FROM user WHERE user_name LIKE #{name}
+		</select>
+
+    <!-- 添加用户 -->
+    <insert id="insertUser" parameterType="user">
+        insert into user
+        (user_id,user_name, gender, birthday, phone_num, address, post, passcode)
+        values
+        (#{user_id},#{user_name}, #{gender}, #{birthday}, #{phone_num}, #{address}, #{post}, #{passcode})
+    </insert>
+
+    <!-- 修改用户信息 -->
+	<update id="updateUserById" parameterType="user">
+			update user set user_name=#{user_name}, gender=#{gender},
+					birthday=#{birthday}, phone_num=#{phone_num},
+					address=#{address}, post=#{post}
+			where user_id = #{user_id}
+		</update>
+
+    <!-- 根据id删除用户 -->
+    <delete id="deleteUserById" parameterType="int">
+			delete from user where user_id = #{id}
+		</delete>
+
+	<!-- 根据用户名查找user_id、post、passcode -->
+
+	<resultMap type="user" id="loginInfoMap">
+		<id	column="user_id" property="user_id"/>
+		<result column="post" property="post"/>
+		<result column="passcode" property="passcode"/>
+	</resultMap>
+
+
+	<select id="findLgInfoByName" parameterType="java.lang.String" resultMap="loginInfoMap">
+			select user_id, post, passcode from user where user_name=#{name}
+		</select>
+
+	<update id="updatePwdById" parameterType="user">
+			update user set passcode = #{passcode} where user_id = #{user_id}
+		</update>
+</mapper>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hngd.data.mapper.SupplierMapper">
+
+    <!-- 根据Id查询供应商信息 -->
+    <select id="findSupplierById" parameterType="int" resultType="supplier">
+			SELECT * FROM suppliers WHERE supplier_id = #{id}
+		</select>
+
+    <!-- 查询所有用户信息 -->
+    <select id="findAllSupplier" resultType="supplier">
+			select * from suppliers
+		</select>
+
+    <!-- 根据用户名实现模糊查询 -->
+    <select id="findSupplierByName" parameterType="java.lang.String" resultType="supplier">
+			SELECT * FROM suppliers WHERE supplier_name LIKE #{name}
+		</select>
+
+    <!--<select id="findIdByName" parameterType="java.lang.String" resultType="int">-->
+			<!--SELECT id FROM supplier WHERE NAME=#{name}-->
+		<!--</select>-->
+
+    <!-- 添加用户 -->
+    <insert id="insertSupplier" parameterType="supplier">
+        insert into suppliers
+        (supplier_id, supplier_name,contact_person, phone_num, address, fax, description)
+        values
+        (#{supplier_id}, #{supplier_name} ,#{contact_person}, #{phone_num}, #{address}, #{fax}, #{description})
+    </insert>
+
+    <!-- 修改用户信息 -->
+    <update id="updateSupplierById" parameterType="supplier">
+			update suppliers set supplier_name=#{supplier_name}, contact_person=#{contact_person},
+					phone_num=#{phone_num}, address=#{address},
+					fax=#{fax}, description=#{description}
+			where supplier_id = #{supplier_id}
+		</update>
+
+    <!-- 根据id删除用户 -->
+    <delete id="delSupplierById" parameterType="int">
+			delete from suppliers where supplier_id = #{id}
+		</delete>
+</mapper>
